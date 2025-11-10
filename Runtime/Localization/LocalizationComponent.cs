@@ -19,6 +19,7 @@ namespace GameFrameX.Localization.Runtime
     [AddComponentMenu("Game Framework/Localization")]
     [HelpURL("https://datatracker.ietf.org/doc/html/rfc5646")]
     [Preserve]
+    [RequireComponent(typeof(GameFrameXLocalizationCroppingHelper))]
     public sealed class LocalizationComponent : GameFrameworkComponent
     {
         private ILocalizationManager m_LocalizationManager = null;
