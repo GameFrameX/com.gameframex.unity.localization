@@ -16,7 +16,7 @@ namespace GameFrameX.Localization.Runtime
     /// 本地化组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/Localization")]
+    [AddComponentMenu("GameFrameX/Localization")]
     [HelpURL("https://datatracker.ietf.org/doc/html/rfc5646")]
     [Preserve]
     [RequireComponent(typeof(GameFrameXLocalizationCroppingHelper))]
