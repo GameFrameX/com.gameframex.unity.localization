@@ -853,7 +853,11 @@ namespace GameFrameX.Localization.Runtime
         /// <returns>是否存在字典。</returns>
         public bool HasRawString(string key)
         {
-            GameFrameworkGuard.NotNullOrEmpty(key, nameof(key));
+            if (key.IsNullOrEmpty())
+            {
+                return false;
+            }
+
             return _dictionary.ContainsKey(key);
         }
 
@@ -865,7 +869,11 @@ namespace GameFrameX.Localization.Runtime
         [Preserve]
         public string GetRawString(string key)
         {
-            GameFrameworkGuard.NotNullOrEmpty(key, nameof(key));
+            if (key.IsNullOrEmpty())
+            {
+                return default;
+            }
+
             if (_dictionary.TryGetValue(key, out var value))
             {
                 return value;
@@ -882,7 +890,11 @@ namespace GameFrameX.Localization.Runtime
         /// <returns>是否增加字典成功。</returns>
         public bool AddRawString(string key, string value)
         {
-            GameFrameworkGuard.NotNullOrEmpty(key, nameof(key));
+            if (key.IsNullOrEmpty())
+            {
+                return false;
+            }
+
             if (_dictionary.ContainsKey(key))
             {
                 return false;
@@ -899,7 +911,11 @@ namespace GameFrameX.Localization.Runtime
         /// <returns>是否移除字典成功。</returns>
         public bool RemoveRawString(string key)
         {
-            GameFrameworkGuard.NotNullOrEmpty(key, nameof(key));
+            if (key.IsNullOrEmpty())
+            {
+                return false;
+            }
+
             return _dictionary.Remove(key);
         }
 
