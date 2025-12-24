@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.0.0...2.1.0) (2025-12-24)
+
+
+### Bug Fixes
+
+* **LocalizationManager:** 修改空键检查逻辑以直接返回默认值 ([5ec0446](https://github.com/gameframex/com.gameframex.unity.localization/commit/5ec04467d3c930bd4a88a465e34ae5512359b238))
+
+
+### Features
+
+* **本地化:** 为LocalizationComponent添加RequireComponent特性 ([f9b0d75](https://github.com/gameframex/com.gameframex.unity.localization/commit/f9b0d757d7e630d347d531bd06f4c370e9d3377a))
+
 # Changelog
 
 ## [2.0.0](https://github.com/GameFrameX/com.gameframex.unity.localization/tree/2.0.0) (2025-06-23)
