@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.1.0...2.1.1) (2026-01-14)
+
+
+### Bug Fixes
+
+* **本地化:** 当语言为未知时返回系统语言 ([e87776b](https://github.com/gameframex/com.gameframex.unity.localization/commit/e87776b1cffffbf1311f370183072e4fcf1c31fe))
+
 # [2.1.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.0.0...2.1.0) (2025-12-24)
 
 
