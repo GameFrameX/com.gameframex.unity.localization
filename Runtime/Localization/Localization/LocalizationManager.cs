@@ -88,7 +88,15 @@ namespace GameFrameX.Localization.Runtime
         [Preserve]
         public string Language
         {
-            get { return _language; }
+            get
+            {
+                if (_language == UnknownLocalization)
+                {
+                    return SystemLanguage;
+                }
+
+                return _language;
+            }
             set
             {
                 if (value == UnknownLocalization)
