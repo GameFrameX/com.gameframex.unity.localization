@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.1.1...2.2.0) (2026-01-19)
+
+
+### Features
+
+* **本地化:** 为LocalizationComponent添加Preserve属性和参数化GetString方法 ([3f9b100](https://github.com/gameframex/com.gameframex.unity.localization/commit/3f9b1009913d6327499042c0d4d4a650daaca642))
+
 ## [2.1.1](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.1.0...2.1.1) (2026-01-14)
 
 
