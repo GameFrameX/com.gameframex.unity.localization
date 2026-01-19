@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.0...2.2.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* **本地化:** 将空键和未找到键的返回值从null/default改为空字符串 ([d03fc4e](https://github.com/gameframex/com.gameframex.unity.localization/commit/d03fc4e043739b48cf672dbcd73f187d209393f5))
+
 # [2.2.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.1.1...2.2.0) (2026-01-19)
 
 
