@@ -879,7 +879,7 @@ namespace GameFrameX.Localization.Runtime
         {
             if (key.IsNullOrEmpty())
             {
-                return default;
+                return string.Empty;
             }
 
             if (_dictionary.TryGetValue(key, out var value))
@@ -887,7 +887,7 @@ namespace GameFrameX.Localization.Runtime
                 return value;
             }
 
-            return null;
+            return string.Empty;
         }
 
         /// <summary>
