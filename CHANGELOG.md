@@ -1,3 +1,11 @@
+## [2.2.2](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.1...2.2.2) (2026-05-28)
+
+
+### Bug Fixes
+
+* **ci:** 统一 .github 工作流配置 ([b5e8498](https://github.com/gameframex/com.gameframex.unity.localization/commit/b5e84984b47e69bcf2ea575e63d394d54e947a4d))
+* **deps:** 补充 package.json 中缺失的包依赖 ([a24612a](https://github.com/gameframex/com.gameframex.unity.localization/commit/a24612aa8049c1b8281363640a326ce0d7daae5f))
+
 ## [2.2.1](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.0...2.2.1) (2026-01-19)
 
 
