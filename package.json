@@ -2,7 +2,7 @@
   "name": "com.gameframex.unity.localization",
   "displayName": "Game Frame X Localization",
   "category": "GameFrameX",
-  "description": "独立游戏前后端一体化解决方案,独立游戏开发者的圆梦大使。\n文档地址: https://gameframex.doc.alianblank.com \n Game Frame X Localization组件 - Unity本地化功能包，提供本地化功能，使本地化功能的使用更加简单高效。",
+  "description": "GameFrameX Localization — Unity multi-language localization package. Provides dictionary-based string translations with parameterized formatting (up to 16 typed parameters), runtime language switching with event notifications, automatic fallback to system or default language, and persistence of language preference via the Setting system. Docs: https://gameframex.doc.alianblank.com\n\nGameFrameX Localization — Unity 多语言本地化功能包。提供基于字典的字符串翻译，支持参数化格式化（最多 16 个类型化参数），运行时语言切换与事件通知，自动回退到系统或默认语言，并通过 Setting 系统持久化语言偏好。文档：https://gameframex.doc.alianblank.com",
   "version": "2.2.1",
   "unity": "2019.4",
   "keywords": [
