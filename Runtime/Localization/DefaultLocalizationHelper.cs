@@ -40,8 +40,6 @@ namespace GameFrameX.Localization.Runtime
     [Preserve]
     public class DefaultLocalizationHelper : LocalizationHelperBase
     {
-        readonly string _regionName = CultureInfo.CurrentCulture.Name.Replace("-", "_");
-
         [Preserve]
         public DefaultLocalizationHelper()
         {
@@ -53,7 +51,7 @@ namespace GameFrameX.Localization.Runtime
         [Preserve]
         public override string SystemLanguage
         {
-            get { return _regionName; }
+            get { return CultureInfo.CurrentCulture.Name.Replace("-", "_"); }
         }
     }
 }

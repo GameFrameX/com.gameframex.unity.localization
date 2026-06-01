@@ -19,18 +19,18 @@ namespace GameFrameX.Localization.Runtime
         /// 当前语言。
         /// </summary>
         [Preserve]
-        public string Language { get; set; }
+        public string Language { get; private set; }
 
         /// <summary>
         /// 未知本地化
         /// </summary>
-        const string UnknownLocalization = "zxx";
+        const string UnknownLocalization = LocalizationManager.UnknownLocalization;
 
         /// <summary>
         /// 旧的语言。
         /// </summary>
         [Preserve]
-        public string OldLanguage { get; set; }
+        public string OldLanguage { get; private set; }
 
         /// <summary>
         /// 初始化本地化语言改变事件的新实例。
