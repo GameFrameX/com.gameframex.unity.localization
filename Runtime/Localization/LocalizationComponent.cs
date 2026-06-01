@@ -55,7 +55,7 @@ namespace GameFrameX.Localization.Runtime
         /// <summary>
         /// 未知本地化
         /// </summary>
-        const string UnknownLocalization = "zxx";
+        const string UnknownLocalization = LocalizationManager.UnknownLocalization;
 
         [SerializeField] private string m_EditorLanguage = "zh_CN";
 
@@ -176,14 +176,6 @@ namespace GameFrameX.Localization.Runtime
                 Log.Fatal("Localization manager is invalid.");
                 return;
             }
-
-            /*m_LocalizationManager.ReadDataSuccess += OnReadDataSuccess;
-            m_LocalizationManager.ReadDataFailure += OnReadDataFailure;
-
-            if (m_EnableLoadDictionaryUpdateEvent)
-            {
-                m_LocalizationManager.ReadDataUpdate += OnReadDataUpdate;
-            }*/
         }
 
         [Preserve]
@@ -214,7 +206,7 @@ namespace GameFrameX.Localization.Runtime
             LocalizationHelperBase localizationHelper = Helper.CreateHelper(m_LocalizationHelperTypeName, m_CustomLocalizationHelper);
             if (localizationHelper == null)
             {
-                Log.Error("Can not create localization helper.");
+                Log.Fatal("Can not create localization helper.");
                 return;
             }
 
@@ -734,9 +726,11 @@ namespace GameFrameX.Localization.Runtime
         /// </summary>
         /// <param name="key">字典主键。</param>
         /// <param name="value">字典值。</param>
-        public void AddRawString(string key, string value)
+        /// <returns>是否添加字典成功。</returns>
+        [Preserve]
+        public bool AddRawString(string key, string value)
         {
-            m_LocalizationManager.AddRawString(key, value);
+            return m_LocalizationManager.AddRawString(key, value);
         }
 
         /// <summary>
@@ -756,23 +750,5 @@ namespace GameFrameX.Localization.Runtime
         {
             m_LocalizationManager.RemoveAllRawStrings();
         }
-
-        /*
-        private void OnReadDataSuccess(object sender, ReadDataSuccessEventArgs e)
-        {
-            m_EventComponent.Fire(this, LoadDictionarySuccessEventArgs.Create(e));
-        }
-
-        private void OnReadDataFailure(object sender, ReadDataFailureEventArgs e)
-        {
-            Log.Warning("Load dictionary failure, asset name '{0}', error message '{1}'.", e.DataAssetName,
-                e.ErrorMessage);
-            m_EventComponent.Fire(this, LoadDictionaryFailureEventArgs.Create(e));
-        }
-
-        private void OnReadDataUpdate(object sender, ReadDataUpdateEventArgs e)
-        {
-            m_EventComponent.Fire(this, LoadDictionaryUpdateEventArgs.Create(e));
-        }*/
     }
 }

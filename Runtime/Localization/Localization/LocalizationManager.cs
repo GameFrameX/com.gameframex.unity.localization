@@ -50,7 +50,7 @@ namespace GameFrameX.Localization.Runtime
         /// <summary>
         /// 未知本地化
         /// </summary>
-        const string UnknownLocalization = "zxx";
+        public const string UnknownLocalization = "zxx";
 
         /// <summary>
         /// 初始化本地化管理器的新实例。
