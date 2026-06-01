@@ -1,3 +1,10 @@
+## [2.2.4](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.3...2.2.4) (2026-06-01)
+
+
+### Bug Fixes
+
+* **test:** 补充 UnitTests.cs 缺失的 using 声明 ([a129b70](https://github.com/gameframex/com.gameframex.unity.localization/commit/a129b70ecf38fa5b42bef9cda7d78269033cef2e))
+
 ## [2.2.3](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.2...2.2.3) (2026-06-01)
 
 

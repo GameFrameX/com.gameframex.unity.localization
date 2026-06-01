@@ -3,7 +3,7 @@
   "displayName": "Game Frame X Localization",
   "category": "GameFrameX",
   "description": "GameFrameX Localization — Unity multi-language localization package. Provides dictionary-based string translations with parameterized formatting (up to 16 typed parameters), runtime language switching with event notifications, automatic fallback to system or default language, and persistence of language preference via the Setting system. Docs: https://gameframex.doc.alianblank.com\n\nGameFrameX Localization — Unity 多语言本地化功能包。提供基于字典的字符串翻译，支持参数化格式化（最多 16 个类型化参数），运行时语言切换与事件通知，自动回退到系统或默认语言，并通过 Setting 系统持久化语言偏好。文档：https://gameframex.doc.alianblank.com",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "unity": "2019.4",
   "keywords": [
     "GameFrameX",
