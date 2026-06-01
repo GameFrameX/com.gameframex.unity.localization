@@ -1,3 +1,12 @@
+## [2.2.3](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.2...2.2.3) (2026-06-01)
+
+
+### Bug Fixes
+
+* **component:** 修复接口一致性并统一常量定义 ([6b1a49f](https://github.com/gameframex/com.gameframex.unity.localization/commit/6b1a49fda692759edb8d32c8dd2680d4f31503e3))
+* **event:** EventArgs 属性改为 private set 并动态获取系统语言 ([e3fedd7](https://github.com/gameframex/com.gameframex.unity.localization/commit/e3fedd72cdc7cf6715639372a08a1d9d8743b22e))
+* **manager:** GetRawString 返回 null 并为 GetString(params) 添加异常保护 ([e9c804b](https://github.com/gameframex/com.gameframex.unity.localization/commit/e9c804b0ac787104f35c9bad4c07430aa0b016c1))
+
 ## [2.2.2](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.1...2.2.2) (2026-05-28)
 
 
