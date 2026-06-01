@@ -47,12 +47,12 @@ namespace GameFrameX.Localization.Runtime
         #region 东亚地区语言代码
 
         /// <summary>
-        /// 中文(简体)语言代码
+        /// 中文(简体)语言代码。等同于 ChineseSimplified
         /// </summary>
         [Preserve] public const string Chinese = "zh_CN";
 
         /// <summary>
-        /// 中文(简体)语言代码
+        /// 中文(简体)语言代码。等同于 Chinese
         /// </summary>
         [Preserve] public const string ChineseSimplified = "zh_CN";
 
@@ -225,8 +225,10 @@ namespace GameFrameX.Localization.Runtime
         [Preserve] public const string ItalianVA = "it_VA";
 
         /// <summary>
-        /// 西班牙语语言代码
+        /// 西班牙语(西班牙)语言代码
         /// </summary>
+        [Preserve] public const string Spanish = "es_ES";
+
         /// <summary>
         /// 西班牙语(阿根廷)语言代码
         /// </summary>
@@ -685,22 +687,22 @@ namespace GameFrameX.Localization.Runtime
         [Preserve] public const string ArabicLY = "ar_LY";
 
         /// <summary>
-        /// 希伯来语(以色列)语言代码
+        /// 希伯来语(以色列)语言代码。等同于 HebrewIL
         /// </summary>
         [Preserve] public const string Hebrew = "he_IL";
 
         /// <summary>
-        /// 希伯来语语言代码
+        /// 希伯来语语言代码。等同于 Hebrew
         /// </summary>
         [Preserve] public const string HebrewIL = "he_IL";
 
         /// <summary>
-        /// 波斯语(伊朗)语言代码
+        /// 波斯语(伊朗)语言代码。等同于 PersianAF 的伊朗变体
         /// </summary>
         [Preserve] public const string Persian = "fa_IR";
 
         /// <summary>
-        /// 波斯语语言代码
+        /// 波斯语(阿富汗)语言代码
         /// </summary>
         [Preserve] public const string PersianAF = "fa_AF";
 
@@ -854,7 +856,7 @@ namespace GameFrameX.Localization.Runtime
         [Preserve] public const string Indonesian = "id_ID";
 
         /// <summary>
-        /// 菲律宾语语言代码
+        /// 菲律宾语语言代码。等同于 Tagalog
         /// </summary>
         [Preserve] public const string Filipino = "tl_PH";
 
@@ -874,7 +876,7 @@ namespace GameFrameX.Localization.Runtime
         [Preserve] public const string MalaySG = "ms_SG";
 
         /// <summary>
-        /// 菲律宾语语言代码
+        /// 他加禄语语言代码。等同于 Filipino
         /// </summary>
         [Preserve] public const string Tagalog = "tl_PH";
 

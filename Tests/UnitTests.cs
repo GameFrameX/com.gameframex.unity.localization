@@ -1,37 +1,117 @@
-using System;
 using NUnit.Framework;
 
 namespace GameFrameX.Localization.Tests
 {
     internal class UnitTests
     {
-        private DateTime dateTime, dateTime1;
+        private LocalizationManager _manager;
 
         [SetUp]
         public void Setup()
         {
-            dateTime = DateTime.Now;
-            dateTime1 = DateTime.Now.AddHours(1);
+            _manager = new LocalizationManager();
         }
 
-        // Here is an example of a unit test for the IsUnixSameDay method
-        [Test]
-        public void TestIsUnixSameDay()
+        [TearDown]
+        public void Teardown()
         {
-            // Arrange
-            // long timestamp1 = 1617842400; // April 7, 2021 12:00:00 AM UTC
-            // long timestamp2 = 1617896400; // April 7, 2021 12:00:00 PM UTC
-
-            // Act
+            _manager.RemoveAllRawStrings();
         }
 
+        [Test]
+        public void GetRawString_ReturnsNull_WhenKeyIsNull()
+        {
+            Assert.IsNull(_manager.GetRawString(null));
+        }
 
         [Test]
-        public void Test1()
+        public void GetRawString_ReturnsNull_WhenKeyIsEmpty()
         {
-            Assert.That(dateTime1.Year, Is.EqualTo(dateTime.Year));
-            Assert.That(dateTime1.Month, Is.EqualTo(dateTime.Month));
-            Assert.That(dateTime1.Day, Is.EqualTo(dateTime.Day));
+            Assert.IsNull(_manager.GetRawString(string.Empty));
+        }
+
+        [Test]
+        public void GetRawString_ReturnsNull_WhenKeyNotFound()
+        {
+            Assert.IsNull(_manager.GetRawString("nonexistent_key"));
+        }
+
+        [Test]
+        public void GetRawString_ReturnsValue_WhenKeyExists()
+        {
+            _manager.AddRawString("test_key", "test_value");
+            Assert.AreEqual("test_value", _manager.GetRawString("test_key"));
+        }
+
+        [Test]
+        public void GetString_ReturnsNoKey_WhenKeyNotFound()
+        {
+            var result = _manager.GetString("missing_key");
+            Assert.IsTrue(result.StartsWith("<NoKey>"));
+        }
+
+        [Test]
+        public void GetString_WithArgs_ReturnsNoKey_WhenKeyNotFound()
+        {
+            var result = _manager.GetString("missing_key", "arg1");
+            Assert.IsTrue(result.StartsWith("<NoKey>"));
+        }
+
+        [Test]
+        public void GetString_WithArgs_ReturnsError_WhenFormatMismatch()
+        {
+            _manager.AddRawString("bad_format", "{0} {1} {2} {3}");
+            var result = _manager.GetString("bad_format", "only_one_arg");
+            Assert.IsTrue(result.StartsWith("<Error>"));
+        }
+
+        [Test]
+        public void AddRawString_ReturnsTrue_WhenKeyIsValid()
+        {
+            Assert.IsTrue(_manager.AddRawString("key1", "value1"));
+        }
+
+        [Test]
+        public void AddRawString_ReturnsFalse_WhenKeyIsNull()
+        {
+            Assert.IsFalse(_manager.AddRawString(null, "value"));
+        }
+
+        [Test]
+        public void AddRawString_ReturnsFalse_WhenKeyAlreadyExists()
+        {
+            _manager.AddRawString("key1", "value1");
+            Assert.IsFalse(_manager.AddRawString("key1", "value2"));
+        }
+
+        [Test]
+        public void HasRawString_ReturnsTrue_WhenKeyExists()
+        {
+            _manager.AddRawString("key1", "value1");
+            Assert.IsTrue(_manager.HasRawString("key1"));
+        }
+
+        [Test]
+        public void HasRawString_ReturnsFalse_WhenKeyDoesNotExist()
+        {
+            Assert.IsFalse(_manager.HasRawString("nonexistent"));
+        }
+
+        [Test]
+        public void RemoveRawString_RemovesKey()
+        {
+            _manager.AddRawString("key1", "value1");
+            Assert.IsTrue(_manager.RemoveRawString("key1"));
+            Assert.IsNull(_manager.GetRawString("key1"));
+        }
+
+        [Test]
+        public void RemoveAllRawStrings_ClearsAll()
+        {
+            _manager.AddRawString("key1", "value1");
+            _manager.AddRawString("key2", "value2");
+            _manager.RemoveAllRawStrings();
+            Assert.AreEqual(0, _manager.DictionaryCount);
         }
     }
 }
