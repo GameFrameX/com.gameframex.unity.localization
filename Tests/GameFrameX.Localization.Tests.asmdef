@@ -1,7 +1,8 @@
 {
     "name": "GameFrameX.Localization.Tests",
     "references": [
-        "GameFrameX.Localization.Runtime"
+        "GameFrameX.Localization.Runtime",
+        "GameFrameX.Runtime"
     ],
     "rootNamespace": "GameFrameX.Localization.Tests",
     "includePlatforms": [
