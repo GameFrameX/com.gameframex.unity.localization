@@ -191,7 +191,14 @@ namespace GameFrameX.Localization.Runtime
                 return Utility.Text.Format("<NoKey>{0}", key);
             }
 
-            return Utility.Text.Format(value, args);
+            try
+            {
+                return Utility.Text.Format(value, args);
+            }
+            catch (Exception exception)
+            {
+                return Utility.Text.Format("<Error>{0},{1},{2}", key, value, exception);
+            }
         }
 
         /// <summary>
@@ -879,7 +886,7 @@ namespace GameFrameX.Localization.Runtime
         {
             if (key.IsNullOrEmpty())
             {
-                return string.Empty;
+                return null;
             }
 
             if (_dictionary.TryGetValue(key, out var value))
@@ -887,7 +894,7 @@ namespace GameFrameX.Localization.Runtime
                 return value;
             }
 
-            return string.Empty;
+            return null;
         }
 
         /// <summary>
