@@ -1,3 +1,4 @@
+using GameFrameX.Localization.Runtime;
 using NUnit.Framework;
 
 namespace GameFrameX.Localization.Tests
