@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.4...2.3.0) (2026-06-05)
+
+
+### Features
+
+* **event:** 新增本地化语言改变前后事件参数 ([85887a4](https://github.com/gameframex/com.gameframex.unity.localization/commit/85887a43e9975b7107dcb43c792b21c023edc90a))
+
 ## [2.2.4](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.3...2.2.4) (2026-06-01)
 
 
