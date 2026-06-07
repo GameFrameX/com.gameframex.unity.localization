@@ -91,7 +91,6 @@ Then add the package to `dependencies`:
 }
 ```
 
-
 ## Usage
 
 ### Getting the Component
@@ -353,4 +352,4 @@ Then assign it in the Inspector's **Localization Helper** field, or set `m_Local
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE.md) for details.
+See [LICENSE.md](LICENSE.md) for license information.

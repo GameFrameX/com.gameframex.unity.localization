@@ -91,7 +91,6 @@ Then add the package to `dependencies`:
 }
 ```
 
-
 ## 使い方
 
 ### コンポーネントの取得
@@ -353,4 +352,4 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 
 ## ライセンス
 
-このプロジェクトは MIT ライセンスの下で公開されています。詳細は [LICENSE](LICENSE.md) ファイルを参照してください。
+詳しくは [LICENSE.md](LICENSE.md) をご参照ください。
