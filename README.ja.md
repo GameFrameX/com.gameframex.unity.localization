@@ -61,36 +61,36 @@ Game Frame X Localization は、GameFrameX フレームワークに基づく Uni
 
 ## クイックスタート
 
-### 動作環境
-
-- Unity 2019.4 以上
-- GameFrameX フレームワーク 1.1.1 以上
-
 ### インストール
 
-以下のいずれかの方法をお選びください：
+Unity プロジェクトの `Packages/manifest.json` を編集し、`scopedRegistries` セクションを追加してください：
 
-1. プロジェクトの `manifest.json` の `dependencies` セクションに以下を追加：
-   ```json
-   {"com.gameframex.unity.localization": "https://github.com/GameFrameX/com.gameframex.unity.localization.git"}
-   ```
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
 
-2. Unity の Package Manager で `Git URL` を使用：
-   ```
-   https://github.com/GameFrameX/com.gameframex.unity.localization.git
-   ```
+`scopes` は、どのパッケージをこのレジストリから解決するかを制御します。`com.gameframex` で始まるパッケージのみがこのレジストリから取得されます。
 
-3. リポジトリをダウンロードして Unity プロジェクトの `Packages` ディレクトリに配置。自動的にロードされます。
+Then add the package to `dependencies`:
 
-### コンポーネントの設定
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.localization": "2.3.0"
+  }
+}
+```
 
-シーン内の GameObject に **GameFrameX/Localization** コンポーネントを追加します（通常、他の GameFrameX コンポーネントと同じ GameObject に配置します）。このコンポーネントは `EventComponent`、`SettingComponent`、`BaseComponent` が必要です。
-
-Inspector で以下の項目を設定できます：
-- **Default Language** — 言語設定が保存されていない場合のフォールバック言語（例：`ja_JP`）
-- **Enable Editor Mode** — チェックすると、Unity エディタでシステム言語の代わりに Editor Language を使用
-- **Editor Language** — エディタモードで使用する言語コード
-- **Localization Helper** — デフォルトの Helper 実装をオプションで上書き
 
 ## 使い方
 

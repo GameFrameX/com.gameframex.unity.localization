@@ -61,36 +61,36 @@ Game Frame X Localization is a Unity localization package based on the GameFrame
 
 ## Quick Start
 
-### System Requirements
-
-- Unity 2019.4 or higher
-- GameFrameX framework 1.1.1 or higher
-
 ### Installation
 
-Choose one of the following methods:
+Edit your Unity project's `Packages/manifest.json` and add the `scopedRegistries` section:
 
-1. Add the following to the `dependencies` section in your project's `manifest.json`:
-   ```json
-   {"com.gameframex.unity.localization": "https://github.com/GameFrameX/com.gameframex.unity.localization.git"}
-   ```
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
 
-2. Use `Git URL` in Unity's Package Manager:
-   ```
-   https://github.com/GameFrameX/com.gameframex.unity.localization.git
-   ```
+`scopes` controls which packages are resolved through this registry. Only packages whose names start with `com.gameframex` will be fetched from it.
 
-3. Download the repository and place it in your Unity project's `Packages` directory. It will be loaded automatically.
+Then add the package to `dependencies`:
 
-### Component Setup
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.localization": "2.3.0"
+  }
+}
+```
 
-Add the **GameFrameX/Localization** component to a GameObject in your scene (typically on the same GameObject as other GameFrameX components). The component requires `EventComponent`, `SettingComponent`, and `BaseComponent` to be available.
-
-In the Inspector you can configure:
-- **Default Language** — Fallback language when no preference is saved (e.g. `zh_CN`)
-- **Enable Editor Mode** — When enabled, uses the **Editor Language** field instead of the system language in the Unity Editor
-- **Editor Language** — Language to use while developing in the Editor
-- **Localization Helper** — Optionally override the default helper implementation
 
 ## Usage
 

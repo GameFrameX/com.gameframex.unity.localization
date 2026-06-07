@@ -61,36 +61,36 @@ Game Frame X Localization은 GameFrameX 프레임워크 기반의 Unity 현지�
 
 ## 빠른 시작
 
-### 시스템 요구 사항
-
-- Unity 2019.4 이상
-- GameFrameX 프레임워크 1.1.1 이상
-
 ### 설치
 
-다음 방법 중 하나를 선택하세요:
+Unity 프로젝트의 `Packages/manifest.json`을 편집하여 `scopedRegistries` 섹션을 추가하세요:
 
-1. 프로젝트의 `manifest.json` 파일 `dependencies` 섹션에 다음을 추가:
-   ```json
-   {"com.gameframex.unity.localization": "https://github.com/GameFrameX/com.gameframex.unity.localization.git"}
-   ```
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
 
-2. Unity의 Package Manager에서 `Git URL` 사용:
-   ```
-   https://github.com/GameFrameX/com.gameframex.unity.localization.git
-   ```
+`scopes`는 이 레지스트리를 통해 어떤 패키지를 해석할지 제어합니다. `com.gameframex`로 시작하는 패키지만 이 레지스트리에서 가져옵니다.
 
-3. 저장소를 다운로드하여 Unity 프로젝트의 `Packages` 디렉토리에 배치. 자동으로 로드됩니다.
+Then add the package to `dependencies`:
 
-### 컴포넌트 설정
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.localization": "2.3.0"
+  }
+}
+```
 
-씬의 GameObject에 **GameFrameX/Localization** 컴포넌트를 추가합니다(보통 다른 GameFrameX 컴포넌트와 동일한 GameObject에 배치). 이 컴포넌트는 `EventComponent`, `SettingComponent`, `BaseComponent`가 필요합니다.
-
-Inspector에서 다음 항목을 설정할 수 있습니다:
-- **Default Language** — 언어 설정이 저장되지 않은 경우의 폴백 언어(예: `ko_KR`)
-- **Enable Editor Mode** — 체크하면 Unity 에디터에서 시스템 언어 대신 Editor Language를 사용
-- **Editor Language** — 에디터 모드에서 사용할 언어 코드
-- **Localization Helper** — 기본 Helper 구현을 선택적으로 덮어쓰기
 
 ## 사용법
 

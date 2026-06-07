@@ -61,36 +61,36 @@ Game Frame X Localization 是一個基於 GameFrameX 框架的 Unity 本地化�
 
 ## 快速開始
 
-### 系統要求
-
-- Unity 2019.4 或更高版本
-- GameFrameX 框架 1.1.1 或更高版本
-
 ### 安裝
 
-任選以下方式之一：
+編輯 Unity 專案的 `Packages/manifest.json`，添加 `scopedRegistries` 部分：
 
-1. 在專案 `manifest.json` 的 `dependencies` 節點下新增：
-   ```json
-   {"com.gameframex.unity.localization": "https://github.com/GameFrameX/com.gameframex.unity.localization.git"}
-   ```
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "GameFrameX",
+      "url": "https://gameframex.upm.alianblank.uk",
+      "scopes": [
+        "com.gameframex"
+      ]
+    }
+  ]
+}
+```
 
-2. 在 Unity 的 Package Manager 中使用 `Git URL` 新增：
-   ```
-   https://github.com/GameFrameX/com.gameframex.unity.localization.git
-   ```
+`scopes` 控制哪些套件透過此註冊表解析。只有以 `com.gameframex` 開頭的套件才會從這個註冊表取得。
 
-3. 直接下載倉庫放置到 Unity 專案的 `Packages` 目錄下，會自動載入識別。
+Then add the package to `dependencies`:
 
-### 組件配置
+```json
+{
+  "dependencies": {
+    "com.gameframex.unity.localization": "2.3.0"
+  }
+}
+```
 
-在場景中的 GameObject 上新增 **GameFrameX/Localization** 組件（通常與其他 GameFrameX 組件掛載在同一個 GameObject 上）。該組件依賴 `EventComponent`、`SettingComponent` 和 `BaseComponent`。
-
-在 Inspector 中可配置以下選項：
-- **Default Language** — 未儲存語言偏好時的回退語言（如 `zh_TW`）
-- **Enable Editor Mode** — 勾選後，在 Unity 編輯器中使用 Editor Language 而非系統語言
-- **Editor Language** — 編輯器模式下使用的語言代碼
-- **Localization Helper** — 可選覆蓋預設的 Helper 實作
 
 ## 使用指南
 
