@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.3.0...2.3.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* 补全包规范文件（LICENSE/CHANGELOG/URL 字段/unity 字段） ([348a2b8](https://github.com/gameframex/com.gameframex.unity.localization/commit/348a2b85bb56fd916316be79902a2bdbe0d5ade2))
+
 # [2.3.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.2.4...2.3.0) (2026-06-05)
 
 
