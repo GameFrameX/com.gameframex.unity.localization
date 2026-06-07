@@ -91,7 +91,7 @@ Then add the package to `dependencies`:
 }
 ```
 
-## 使い方
+## 使用例
 
 ### コンポーネントの取得
 
@@ -350,6 +350,14 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 - リポジトリ: https://github.com/GameFrameX/com.gameframex.unity.localization
 - Issues: https://github.com/GameFrameX/com.gameframex.unity.localization/issues
 
+
+## コミュニティとサポート
+
+- QQグループ: 467608841 / 233840761
+
+## 変更履歴
+
+[Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.localization/releases) で変更履歴を確認してください。
 ## ライセンス
 
 詳しくは [LICENSE.md](LICENSE.md) をご参照ください。

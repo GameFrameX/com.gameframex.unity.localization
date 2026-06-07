@@ -336,7 +336,7 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 
 然后在 Inspector 的 **Localization Helper** 字段中分配，或将 `m_LocalizationHelperTypeName` 设置为该类型的完整名称。
 
-## 依赖项
+## 依赖
 
 | 包名 | 版本 | 说明 |
 |------|------|------|
@@ -351,6 +351,14 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 - 仓库地址: https://github.com/GameFrameX/com.gameframex.unity.localization
 - 问题反馈: https://github.com/GameFrameX/com.gameframex.unity.localization/issues
 
+
+## 社区与支持
+
+- QQ群: 467608841 / 233840761
+
+## 更新日志
+
+查看 [Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.localization/releases) 了解更新日志。
 ## 开源协议
 
 本项目遵循 MIT 许可证。详细信息请查看 [LICENSE](LICENSE.md) 文件。

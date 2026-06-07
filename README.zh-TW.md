@@ -351,6 +351,23 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 - 倉庫地址: https://github.com/GameFrameX/com.gameframex.unity.localization
 - 問題回饋: https://github.com/GameFrameX/com.gameframex.unity.localization/issues
 
+
+## 依賴
+
+| 套件 | 說明 |
+|------|------|
+| `com.gameframex.unity` | 1.1.1 |
+| `com.gameframex.unity.asset` | 1.0.6 |
+| `com.gameframex.unity.event` | 1.0.0 |
+| `com.gameframex.unity.setting` | 1.5.0 |
+
+## 社區與支援
+
+- QQ群: 467608841 / 233840761
+
+## 更新日誌
+
+查看 [Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.localization/releases) 了解更新日誌。
 ## 開源協議
 
 本專案遵循 MIT 許可證。詳細資訊請查看 [LICENSE](LICENSE.md) 檔案。

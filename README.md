@@ -91,7 +91,7 @@ Then add the package to `dependencies`:
 }
 ```
 
-## Usage
+## Usage Examples
 
 ### Getting the Component
 
@@ -350,6 +350,14 @@ Then assign it in the Inspector's **Localization Helper** field, or set `m_Local
 - Repository: https://github.com/GameFrameX/com.gameframex.unity.localization
 - Issues: https://github.com/GameFrameX/com.gameframex.unity.localization/issues
 
+
+## Community & Support
+
+- QQ Group: 467608841 / 233840761
+
+## Changelog
+
+See [Releases](https://github.com/GameFrameX/gameframex/com.gameframex.unity.localization/releases) for changelog.
 ## License
 
 See [LICENSE.md](LICENSE.md) for license information.
