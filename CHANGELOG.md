@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.3.1...2.3.2) (2026-07-30)
+
+
+### Bug Fixes
+
+* 更新依赖版本以支持新功能和修复已知问题 ([2276581](https://github.com/gameframex/com.gameframex.unity.localization/commit/2276581ee875bd3eb73f8fbe1c0acebd7bd293a7))
+
 ## [2.3.1](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.3.0...2.3.1) (2026-06-07)
 
 
