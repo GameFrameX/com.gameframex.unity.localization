@@ -3,7 +3,7 @@
     "displayName": "Game Frame X Localization",
     "category": "GameFrameX",
     "description": "GameFrameX Localization — Unity localization package. Manages language dictionaries loaded asynchronously with success / update / failure events, switches the current language at runtime (persisted through the Setting module and announced via before / on / after change events), and serves GetString with up to 16 typed format arguments. Startup moves to code-level LocalizationOptions (GameFrameXOptions.Configure: default and editor language, helper factory); startup-only fields reject runtime writes with a warning. Docs: https://gameframex.doc.alianblank.com\n\nGameFrameX Localization — Unity 本地化功能包。异步加载语言字典并发布成功/更新/失败事件，运行时切换当前语言（经 Setting 模块持久化，并以切换前/切换中/切换后三段事件广播），GetString 支持最多 16 个类型化格式化参数。启动配置收敛为代码级 LocalizationOptions（GameFrameXOptions.Configure：默认语言、编辑器语言、Helper 工厂）；启动期型字段运行期写入将被拒绝并告警。文档：https://gameframex.doc.alianblank.com",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "unity": "2019.4",
     "keywords": [
         "GameFrameX",
