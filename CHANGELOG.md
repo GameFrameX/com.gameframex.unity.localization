@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/gameframex/com.gameframex.unity.localization/compare/2.3.2...3.0.0) (2026-10-15)
+
+
+* feat(module)!: 本地化模块薄入口化并新增 LocalizationOptions ([11b0c49](https://github.com/gameframex/com.gameframex.unity.localization/commit/11b0c494210444877217816f098c992e49332806))
+
+
+### BREAKING CHANGES
+
+* LocalizationComponent 序列化字段移除，编辑期配置入口收敛到代码 LocalizationOptions。
+
 ## [Unreleased]
 
 ### ⚠ BREAKING CHANGES
