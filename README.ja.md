@@ -335,7 +335,7 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 }
 ```
 
-その後、Inspector の **Localization Helper** フィールドで割り当てるか、`m_LocalizationHelperTypeName` に完全な型名を設定します。
+その後、Inspector の **Localization Helper** フィールドで割り当てるか、`LocalizationOptions.LocalizationHelperFactory` にヘルパーインスタンスを返すファクトリーを設定します。
 
 ## 依存関係
 

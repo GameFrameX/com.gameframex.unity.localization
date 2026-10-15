@@ -1,4 +1,6 @@
+using System;
 using GameFrameX.Localization.Runtime;
+using GameFrameX.Runtime;
 using NUnit.Framework;
 
 namespace GameFrameX.Localization.Tests
@@ -17,6 +19,7 @@ namespace GameFrameX.Localization.Tests
         public void Teardown()
         {
             _manager.RemoveAllRawStrings();
+            GameFrameXOptions.Reset(); // 清除 Options 注册，避免跨用例静态泄漏
         }
 
         [Test]
@@ -113,6 +116,30 @@ namespace GameFrameX.Localization.Tests
             _manager.AddRawString("key2", "value2");
             _manager.RemoveAllRawStrings();
             Assert.AreEqual(0, _manager.DictionaryCount);
+        }
+
+        [Test]
+        public void LocalizationOptions_ConfigureAndTryGet_RoundTripsDiffs()
+        {
+            Func<LocalizationHelperBase> localizationHelperFactory = () => null;
+            GameFrameXOptions.Configure(new LocalizationOptions { DefaultLanguage = "en_US", EditorLanguage = "ja_JP", EnableLoadDictionaryUpdateEvent = true, IsEnableEditorMode = true, LocalizationHelperFactory = localizationHelperFactory });
+
+            Assert.IsTrue(GameFrameXOptions.TryGet<LocalizationOptions>(out var options));
+            Assert.That(options.DefaultLanguage, Is.EqualTo("en_US"));
+            Assert.That(options.EditorLanguage, Is.EqualTo("ja_JP"));
+            Assert.That(options.EnableLoadDictionaryUpdateEvent, Is.True);
+            Assert.That(options.IsEnableEditorMode, Is.True);
+            Assert.That(options.LocalizationHelperFactory, Is.SameAs(localizationHelperFactory));
+
+            GameFrameXOptions.Reset();
+            var defaults = new LocalizationOptions();
+            Assert.That(defaults.DefaultLanguage, Is.EqualTo("zh_CN"));
+            Assert.That(defaults.EditorLanguage, Is.EqualTo("zh_CN"));
+            Assert.That(defaults.EnableLoadDictionaryUpdateEvent, Is.False);
+            Assert.That(defaults.IsEnableEditorMode, Is.False);
+            var localizationHelper = defaults.LocalizationHelperFactory();
+            Assert.That(localizationHelper, Is.InstanceOf<DefaultLocalizationHelper>());
+            UnityEngine.Object.DestroyImmediate(localizationHelper);
         }
     }
 }

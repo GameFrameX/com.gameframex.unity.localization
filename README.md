@@ -335,7 +335,7 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 }
 ```
 
-Then assign it in the Inspector's **Localization Helper** field, or set `m_LocalizationHelperTypeName` to the full type name.
+Then assign it in the Inspector's **Localization Helper** field, or configure `LocalizationOptions.LocalizationHelperFactory` with a factory returning your helper instance.
 
 ## Dependencies
 

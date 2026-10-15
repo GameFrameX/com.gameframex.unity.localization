@@ -29,7 +29,6 @@
 
 using GameFrameX.Event.Runtime;
 using GameFrameX.Runtime;
-using UnityEngine.Scripting;
 
 namespace GameFrameX.Localization.Runtime
 {
@@ -37,20 +36,20 @@ namespace GameFrameX.Localization.Runtime
     /// 本地化语言改变后
     /// </summary>
     /// <remarks>Event fired after the localization language has changed.</remarks>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public sealed class LocalizationLanguageChangeAfterEventArgs : GameEventArgs
     {
         /// <summary>
         /// 本地化语言改变事件编号。
         /// </summary>
         /// <remarks>The event ID for the localization language change event.</remarks>
-        [Preserve] public static readonly string EventId = typeof(LocalizationLanguageChangeAfterEventArgs).FullName;
+        [UnityEngine.Scripting.Preserve] public static readonly string EventId = typeof(LocalizationLanguageChangeAfterEventArgs).FullName;
 
         /// <summary>
         /// 当前语言。
         /// </summary>
         /// <remarks>The current language after the change.</remarks>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string Language { get; private set; }
 
         /// <summary>
@@ -63,14 +62,14 @@ namespace GameFrameX.Localization.Runtime
         /// 旧的语言。
         /// </summary>
         /// <remarks>The language before the change.</remarks>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string OldLanguage { get; private set; }
 
         /// <summary>
         /// 初始化本地化语言改变后事件的新实例。
         /// </summary>
         /// <remarks>Initializes a new instance of the localization language changed event.</remarks>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public LocalizationLanguageChangeAfterEventArgs()
         {
             OldLanguage = UnknownLocalization;
@@ -84,7 +83,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="oldLanguage">旧的语言。 / The language before the change.</param>
         /// <param name="language">当前语言。 / The language after the change.</param>
         /// <returns>创建的本地化语言改变后事件。 / The created localization language changed event.</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public static LocalizationLanguageChangeAfterEventArgs Create(string oldLanguage, string language)
         {
             var localizationLanguageChangeEventArgs = ReferencePool.Acquire<LocalizationLanguageChangeAfterEventArgs>();
@@ -97,7 +96,7 @@ namespace GameFrameX.Localization.Runtime
         /// 清除事件参数。
         /// </summary>
         /// <remarks>Clears the event arguments and resets all properties to their default values.</remarks>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public override void Clear()
         {
             OldLanguage = UnknownLocalization;
@@ -109,7 +108,7 @@ namespace GameFrameX.Localization.Runtime
         /// </summary>
         /// <remarks>Gets the event ID.</remarks>
         /// <returns>事件编号。 / The event ID.</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public override string Id
         {
             get { return EventId; }

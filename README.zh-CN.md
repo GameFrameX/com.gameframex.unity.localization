@@ -335,7 +335,7 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 }
 ```
 
-然后在 Inspector 的 **Localization Helper** 字段中分配，或将 `m_LocalizationHelperTypeName` 设置为该类型的完整名称。
+然后在 Inspector 的 **Localization Helper** 字段中分配，或通过 `LocalizationOptions.LocalizationHelperFactory` 配置返回自定义辅助器实例的工厂。
 
 ## 依赖
 

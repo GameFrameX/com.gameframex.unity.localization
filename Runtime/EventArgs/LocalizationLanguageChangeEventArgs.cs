@@ -1,24 +1,23 @@
 ﻿using GameFrameX.Event.Runtime;
 using GameFrameX.Runtime;
-using UnityEngine.Scripting;
 
 namespace GameFrameX.Localization.Runtime
 {
     /// <summary>
     /// 本地化语言改变事件。
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public sealed class LocalizationLanguageChangeEventArgs : GameEventArgs
     {
         /// <summary>
         /// 本地化语言改变事件编号。
         /// </summary>
-        [Preserve] public static readonly string EventId = typeof(LocalizationLanguageChangeEventArgs).FullName;
+        [UnityEngine.Scripting.Preserve] public static readonly string EventId = typeof(LocalizationLanguageChangeEventArgs).FullName;
 
         /// <summary>
         /// 当前语言。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string Language { get; private set; }
 
         /// <summary>
@@ -29,13 +28,13 @@ namespace GameFrameX.Localization.Runtime
         /// <summary>
         /// 旧的语言。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string OldLanguage { get; private set; }
 
         /// <summary>
         /// 初始化本地化语言改变事件的新实例。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public LocalizationLanguageChangeEventArgs()
         {
             OldLanguage = UnknownLocalization;
@@ -48,7 +47,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="oldLanguage">旧的语言。</param>
         /// <param name="language">当前语言。</param>
         /// <returns>创建的本地化语言改变事件。</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public static LocalizationLanguageChangeEventArgs Create(string oldLanguage, string language)
         {
             LocalizationLanguageChangeEventArgs localizationLanguageChangeEventArgs = ReferencePool.Acquire<LocalizationLanguageChangeEventArgs>();
@@ -60,7 +59,7 @@ namespace GameFrameX.Localization.Runtime
         /// <summary>
         /// 清除事件参数。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public override void Clear()
         {
             OldLanguage = UnknownLocalization;
@@ -71,7 +70,7 @@ namespace GameFrameX.Localization.Runtime
         /// 获取事件编号。
         /// </summary>
         /// <returns>事件编号。</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public override string Id
         {
             get { return EventId; }

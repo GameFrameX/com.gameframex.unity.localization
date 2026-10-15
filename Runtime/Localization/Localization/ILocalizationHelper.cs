@@ -29,20 +29,18 @@
 //  Official Documentation: https://gameframex.doc.alianblank.com/
 // ==========================================================================================
 
-using UnityEngine.Scripting;
-
 namespace GameFrameX.Localization.Runtime
 {
     /// <summary>
     /// 本地化辅助器接口。
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public interface ILocalizationHelper
     {
         /// <summary>
         /// 获取系统语言。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         string SystemLanguage { get; }
     }
 }

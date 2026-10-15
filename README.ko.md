@@ -335,7 +335,7 @@ public class CustomLocalizationHelper : LocalizationHelperBase
 }
 ```
 
-그런 다음 Inspector의 **Localization Helper** 필드에서 할당하거나, `m_LocalizationHelperTypeName`을 해당 타입의 전체 이름으로 설정합니다.
+그런 다음 Inspector의 **Localization Helper** 필드에서 할당하거나, `LocalizationOptions.LocalizationHelperFactory`에 헬퍼 인스턴스를 반환하는 팩토리를 설정합니다.
 
 ## 의존성
 

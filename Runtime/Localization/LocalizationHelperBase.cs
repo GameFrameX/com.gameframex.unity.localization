@@ -30,20 +30,19 @@
 // ==========================================================================================
 
 using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace GameFrameX.Localization.Runtime
 {
     /// <summary>
     /// 本地化辅助器基类。
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public abstract class LocalizationHelperBase : MonoBehaviour, ILocalizationHelper
     {
         /// <summary>
         /// 获取系统语言。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public abstract string SystemLanguage { get; }
     }
 }

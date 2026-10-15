@@ -30,17 +30,16 @@
 // ==========================================================================================
 
 using System.Globalization;
-using UnityEngine.Scripting;
 
 namespace GameFrameX.Localization.Runtime
 {
     /// <summary>
     /// 默认本地化辅助器。
     /// </summary>
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     public class DefaultLocalizationHelper : LocalizationHelperBase
     {
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public DefaultLocalizationHelper()
         {
         }
@@ -48,7 +47,7 @@ namespace GameFrameX.Localization.Runtime
         /// <summary>
         /// 获取系统语言。
         /// </summary>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public override string SystemLanguage
         {
             get { return CultureInfo.CurrentCulture.Name.Replace("-", "_"); }

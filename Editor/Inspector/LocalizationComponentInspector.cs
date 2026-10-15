@@ -38,12 +38,9 @@ namespace GameFrameX.Localization.Editor
     [CustomEditor(typeof(LocalizationComponent))]
     internal sealed class LocalizationComponentInspector : ComponentTypeComponentInspector
     {
-        // private SerializedProperty m_EnableLoadDictionaryUpdateEvent = null;
-        private SerializedProperty m_EditorLanguage = null;
-        private SerializedProperty m_DefaultLanguage = null;
-        private SerializedProperty m_IsEnableEditorMode = null;
 
-        private HelperInfo<LocalizationHelperBase> m_LocalizationHelperInfo = new HelperInfo<LocalizationHelperBase>("Localization");
+
+        private SerializedProperty m_CustomLocalizationHelper = null;
 
         public override void OnInspectorGUI()
         {
@@ -53,15 +50,17 @@ namespace GameFrameX.Localization.Editor
 
             LocalizationComponent localizationComponent = (LocalizationComponent)target;
 
+            // C9 活视图：编辑态提示 LocalizationOptions 入口；Play 态 EnableLoadDictionaryUpdateEvent 可实时修改（写回私有字段），
+            // DefaultLanguage/EditorLanguage/IsEnableEditorMode/工厂为启动期型只读。
+            GameFrameXOptionsLiveViewUtility.DrawLiveView(localizationComponent, typeof(LocalizationOptions));
+
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
-                m_LocalizationHelperInfo.Draw();
-                EditorGUILayout.PropertyField(m_DefaultLanguage);
-                EditorGUILayout.PropertyField(m_IsEnableEditorMode);
-                EditorGUILayout.PropertyField(m_EditorLanguage);
+                EditorGUILayout.PropertyField(m_CustomLocalizationHelper);
+
                 EditorGUILayout.HelpBox("Editor language option is only use for localization test in editor mode.", MessageType.Info);
                 EditorGUILayout.HelpBox("Language Code: https://datatracker.ietf.org/doc/html/rfc5646", MessageType.Info);
-                // EditorGUILayout.PropertyField(m_EnableLoadDictionaryUpdateEvent);
+
             }
             EditorGUI.EndDisabledGroup();
 
@@ -85,12 +84,8 @@ namespace GameFrameX.Localization.Editor
 
         protected override void Enable()
         {
-            // m_EnableLoadDictionaryUpdateEvent = serializedObject.FindProperty("m_EnableLoadDictionaryUpdateEvent");
-            m_EditorLanguage = serializedObject.FindProperty("m_EditorLanguage");
-            m_DefaultLanguage = serializedObject.FindProperty("m_DefaultLanguage");
-            m_IsEnableEditorMode = serializedObject.FindProperty("m_IsEnableEditorMode");
-            m_LocalizationHelperInfo.Init(serializedObject);
-            m_LocalizationHelperInfo.Refresh();
+
+            m_CustomLocalizationHelper = serializedObject.FindProperty("m_CustomLocalizationHelper");
             serializedObject.ApplyModifiedProperties();
         }
 

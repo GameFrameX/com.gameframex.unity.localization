@@ -33,7 +33,7 @@ using GameFrameX.Event.Runtime;
 using GameFrameX.Runtime;
 using GameFrameX.Setting.Runtime;
 using UnityEngine;
-using UnityEngine.Scripting;
+using System;
 
 namespace GameFrameX.Localization.Runtime
 {
@@ -46,13 +46,14 @@ namespace GameFrameX.Localization.Runtime
     [DisallowMultipleComponent]
     [AddComponentMenu("GameFrameX/Localization")]
     [HelpURL("https://datatracker.ietf.org/doc/html/rfc5646")]
-    [Preserve]
+    [UnityEngine.Scripting.Preserve]
     [RequireComponent(typeof(GameFrameXLocalizationCroppingHelper))]
+    [GameFrameXAutoComponent(700)]
     public sealed class LocalizationComponent : GameFrameworkComponent
     {
         private ILocalizationManager m_LocalizationManager = null;
 
-        private EventComponent m_EventComponent = null;
+        private IEventManager m_EventManager = null;
         private SettingComponent m_SettingComponent = null;
 
         /// <summary>
@@ -63,14 +64,14 @@ namespace GameFrameX.Localization.Runtime
         /// </remarks>
         const string UnknownLocalization = LocalizationManager.UnknownLocalization;
 
-        [SerializeField] private string m_EditorLanguage = "zh_CN";
+        private string m_EditorLanguage = "zh_CN";
 
-        [SerializeField] private string m_DefaultLanguage = "zh_CN";
+        private string m_DefaultLanguage = "zh_CN";
 
-        [SerializeField] private bool m_EnableLoadDictionaryUpdateEvent = false;
-        [SerializeField] private bool m_IsEnableEditorMode = false;
+        private bool m_EnableLoadDictionaryUpdateEvent = false;
+        private bool m_IsEnableEditorMode = false;
 
-        [SerializeField] private string m_LocalizationHelperTypeName = "GameFrameX.Localization.Runtime.DefaultLocalizationHelper";
+        private Func<LocalizationHelperBase> m_LocalizationHelperFactory = () => new GameObject().AddComponent<DefaultLocalizationHelper>();
 
         [SerializeField] private LocalizationHelperBase m_CustomLocalizationHelper = null;
 
@@ -84,11 +85,15 @@ namespace GameFrameX.Localization.Runtime
         /// <value>
         /// 编辑器语言（仅编辑器内有效） / Editor language (only effective in editor)
         /// </value>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string EditorLanguage
         {
             get { return m_EditorLanguage; }
-            set { m_EditorLanguage = value; }
+            set
+            {
+                // 启动期型参数：仅模块首次实例化前经 GameFrameXOptions.Configure 生效，运行期修改响亮拒绝
+                Log.Warning("EditorLanguage 是启动期参数，运行期修改已被拒绝，请在启动前经 GameFrameXOptions.Configure 配置。");
+            }
         }
 
         /// <summary>
@@ -100,7 +105,7 @@ namespace GameFrameX.Localization.Runtime
         /// <value>
         /// 默认本地化语言 / Default localization language
         /// </value>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string DefaultLanguage
         {
             get
@@ -118,12 +123,8 @@ namespace GameFrameX.Localization.Runtime
             }
             set
             {
-                if (m_LocalizationManager.DefaultLanguage != value)
-                {
-                    m_LocalizationManager.DefaultLanguage = value;
-                    m_SettingComponent.SetString(nameof(LocalizationComponent) + "." + nameof(DefaultLanguage), value);
-                    m_SettingComponent.Save();
-                }
+                // 启动期型参数：仅模块首次实例化前经 GameFrameXOptions.Configure 生效，运行期修改响亮拒绝
+                Log.Warning("DefaultLanguage 是启动期参数，运行期修改已被拒绝，请在启动前经 GameFrameXOptions.Configure 配置。");
             }
         }
 
@@ -136,7 +137,7 @@ namespace GameFrameX.Localization.Runtime
         /// <value>
         /// 本地化语言 / Localization language
         /// </value>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string Language
         {
             get
@@ -161,11 +162,11 @@ namespace GameFrameX.Localization.Runtime
                     m_SettingComponent.SetString(nameof(LocalizationComponent) + "." + nameof(Language), value);
                     m_SettingComponent.Save();
                     var localizationLanguageChangeBeforeEventArgs = LocalizationLanguageChangeBeforeEventArgs.Create(oldLanguage, value);
-                    m_EventComponent.Fire(this, localizationLanguageChangeBeforeEventArgs);
+                    m_EventManager.Fire(this, localizationLanguageChangeBeforeEventArgs);
                     var localizationLanguageChangeEventArgs = LocalizationLanguageChangeEventArgs.Create(oldLanguage, value);
-                    m_EventComponent.Fire(this, localizationLanguageChangeEventArgs);
+                    m_EventManager.Fire(this, localizationLanguageChangeEventArgs);
                     var localizationLanguageChangeAfterEventArgs = LocalizationLanguageChangeAfterEventArgs.Create(oldLanguage, value);
-                    m_EventComponent.Fire(this, localizationLanguageChangeAfterEventArgs);
+                    m_EventManager.Fire(this, localizationLanguageChangeAfterEventArgs);
                 }
             }
         }
@@ -179,7 +180,7 @@ namespace GameFrameX.Localization.Runtime
         /// <value>
         /// 系统语言 / System language
         /// </value>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string SystemLanguage
         {
             get { return m_LocalizationManager.SystemLanguage; }
@@ -194,7 +195,7 @@ namespace GameFrameX.Localization.Runtime
         /// <value>
         /// 字典数量 / Dictionary count
         /// </value>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public int DictionaryCount
         {
             get { return m_LocalizationManager.DictionaryCount; }
@@ -207,7 +208,7 @@ namespace GameFrameX.Localization.Runtime
         /// <remarks>
         /// Game framework component initialization.
         /// </remarks>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         protected override void Awake()
         {
             ImplementationComponentType = Utility.Assembly.GetType(componentType);
@@ -219,9 +220,18 @@ namespace GameFrameX.Localization.Runtime
                 Log.Fatal("Localization manager is invalid.");
                 return;
             }
+
+            if (GameFrameXOptions.TryGet<LocalizationOptions>(out var localizationOptions))
+            {
+                m_EditorLanguage = localizationOptions.EditorLanguage;
+                m_DefaultLanguage = localizationOptions.DefaultLanguage;
+                m_EnableLoadDictionaryUpdateEvent = localizationOptions.EnableLoadDictionaryUpdateEvent;
+                m_IsEnableEditorMode = localizationOptions.IsEnableEditorMode;
+                m_LocalizationHelperFactory = localizationOptions.LocalizationHelperFactory;
+            }
         }
 
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         private void Start()
         {
             BaseComponent baseComponent = GameEntry.GetComponent<BaseComponent>();
@@ -231,8 +241,8 @@ namespace GameFrameX.Localization.Runtime
                 return;
             }
 
-            m_EventComponent = GameEntry.GetComponent<EventComponent>();
-            if (m_EventComponent == null)
+            m_EventManager = GameFrameworkEntry.GetModule<IEventManager>();
+            if (m_EventManager == null)
             {
                 Log.Fatal("Event component is invalid.");
                 return;
@@ -246,7 +256,7 @@ namespace GameFrameX.Localization.Runtime
             }
 
 
-            LocalizationHelperBase localizationHelper = Helper.CreateHelper(m_LocalizationHelperTypeName, m_CustomLocalizationHelper);
+            LocalizationHelperBase localizationHelper = Helper.CreateHelper(m_LocalizationHelperFactory, m_CustomLocalizationHelper);
             if (localizationHelper == null)
             {
                 Log.Fatal("Can not create localization helper.");
@@ -269,7 +279,8 @@ namespace GameFrameX.Localization.Runtime
                 Language = m_LocalizationManager.SystemLanguage;
             }
 #endif
-            DefaultLanguage = m_DefaultLanguage != UnknownLocalization ? m_DefaultLanguage : m_LocalizationManager.SystemLanguage;
+            // 启动期消费路径直接写管理器，绕开已被改为运行期拒绝的 DefaultLanguage setter
+            m_LocalizationManager.DefaultLanguage = m_DefaultLanguage != UnknownLocalization ? m_DefaultLanguage : m_LocalizationManager.SystemLanguage;
         }
 
         /// <summary>
@@ -280,7 +291,7 @@ namespace GameFrameX.Localization.Runtime
         /// </remarks>
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString(string key)
         {
             return m_LocalizationManager.GetString(key);
@@ -296,7 +307,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <param name="args">字典参数列表 / Dictionary parameter list</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString(string key, params object[] args)
         {
             return m_LocalizationManager.GetString(key, args);
@@ -312,7 +323,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <param name="arg">字典参数 / Dictionary parameter</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T>(string key, T arg)
         {
             return m_LocalizationManager.GetString(key, arg);
@@ -330,7 +341,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg1">字典参数 1 / Dictionary parameter 1</param>
         /// <param name="arg2">字典参数 2 / Dictionary parameter 2</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2>(string key, T1 arg1, T2 arg2)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2);
@@ -350,7 +361,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg2">字典参数 2 / Dictionary parameter 2</param>
         /// <param name="arg3">字典参数 3 / Dictionary parameter 3</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3>(string key, T1 arg1, T2 arg2, T3 arg3)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3);
@@ -372,7 +383,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg3">字典参数 3 / Dictionary parameter 3</param>
         /// <param name="arg4">字典参数 4 / Dictionary parameter 4</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4);
@@ -396,7 +407,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg4">字典参数 4 / Dictionary parameter 4</param>
         /// <param name="arg5">字典参数 5 / Dictionary parameter 5</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5);
@@ -422,7 +433,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg5">字典参数 5 / Dictionary parameter 5</param>
         /// <param name="arg6">字典参数 6 / Dictionary parameter 6</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6);
@@ -450,7 +461,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg6">字典参数 6 / Dictionary parameter 6</param>
         /// <param name="arg7">字典参数 7 / Dictionary parameter 7</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
@@ -480,7 +491,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg7">字典参数 7 / Dictionary parameter 7</param>
         /// <param name="arg8">字典参数 8 / Dictionary parameter 8</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
@@ -512,7 +523,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg8">字典参数 8 / Dictionary parameter 8</param>
         /// <param name="arg9">字典参数 9 / Dictionary parameter 9</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
@@ -546,7 +557,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg9">字典参数 9 / Dictionary parameter 9</param>
         /// <param name="arg10">字典参数 10 / Dictionary parameter 10</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
@@ -582,7 +593,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg10">字典参数 10 / Dictionary parameter 10</param>
         /// <param name="arg11">字典参数 11 / Dictionary parameter 11</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
@@ -620,7 +631,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg11">字典参数 11 / Dictionary parameter 11</param>
         /// <param name="arg12">字典参数 12 / Dictionary parameter 12</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
@@ -660,7 +671,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg12">字典参数 12 / Dictionary parameter 12</param>
         /// <param name="arg13">字典参数 13 / Dictionary parameter 13</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
@@ -702,7 +713,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg13">字典参数 13 / Dictionary parameter 13</param>
         /// <param name="arg14">字典参数 14 / Dictionary parameter 14</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
@@ -746,7 +757,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg14">字典参数 14 / Dictionary parameter 14</param>
         /// <param name="arg15">字典参数 15 / Dictionary parameter 15</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
@@ -792,7 +803,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="arg15">字典参数 15 / Dictionary parameter 15</param>
         /// <param name="arg16">字典参数 16 / Dictionary parameter 16</param>
         /// <returns>要获取的字典内容字符串 / The localized string to get</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public string GetString<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(string key, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
         {
             return m_LocalizationManager.GetString(key, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
@@ -806,6 +817,7 @@ namespace GameFrameX.Localization.Runtime
         /// </remarks>
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <returns>是否存在字典 / Whether the dictionary exists</returns>
+        [UnityEngine.Scripting.Preserve]
         public bool HasRawString(string key)
         {
             return m_LocalizationManager.HasRawString(key);
@@ -819,6 +831,7 @@ namespace GameFrameX.Localization.Runtime
         /// </remarks>
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <returns>字典值 / Dictionary value</returns>
+        [UnityEngine.Scripting.Preserve]
         public string GetRawString(string key)
         {
             return m_LocalizationManager.GetRawString(key);
@@ -833,7 +846,7 @@ namespace GameFrameX.Localization.Runtime
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <param name="value">字典值 / Dictionary value</param>
         /// <returns>是否添加字典成功 / Whether the dictionary was added successfully</returns>
-        [Preserve]
+        [UnityEngine.Scripting.Preserve]
         public bool AddRawString(string key, string value)
         {
             return m_LocalizationManager.AddRawString(key, value);
@@ -847,6 +860,7 @@ namespace GameFrameX.Localization.Runtime
         /// </remarks>
         /// <param name="key">字典主键 / Dictionary key</param>
         /// <returns>是否移除字典成功 / Whether the dictionary was removed successfully</returns>
+        [UnityEngine.Scripting.Preserve]
         public bool RemoveRawString(string key)
         {
             return m_LocalizationManager.RemoveRawString(key);
@@ -858,6 +872,7 @@ namespace GameFrameX.Localization.Runtime
         /// <remarks>
         /// Removes all dictionary entries.
         /// </remarks>
+        [UnityEngine.Scripting.Preserve]
         public void RemoveAllRawStrings()
         {
             m_LocalizationManager.RemoveAllRawStrings();
